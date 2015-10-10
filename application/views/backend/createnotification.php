@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Create notification</h4>
+<h4 class="pad-left-15">Create Notification</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createnotificationsubmit");?>' enctype= 'multipart/form-data'>
 <div class=" row">

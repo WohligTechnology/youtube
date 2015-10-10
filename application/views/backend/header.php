@@ -32,7 +32,7 @@
 			<ul id="slide-out" class="side-nav fixed">
 				<li class="sub-menu logo">
 						<a id="logo-container" href="<?php echo site_url(); ?>" class="align-center blue-text text-darken-4" style="font-size: 28px;">
-                            Business<span style="font-weight: 400;">App</span>
+                            Vidio<span style="font-weight: 400;"></span>
 						</a>
                     </li>
                     <?php  

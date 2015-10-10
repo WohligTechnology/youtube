@@ -1,6 +1,6 @@
-<div class="row">
+ <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Edit latestvideos</h4>
+<h4 class="pad-left-15">Edit Latest Videos</h4>
 </div>
 </div>
 <div class="row">

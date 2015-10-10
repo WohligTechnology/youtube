@@ -1,8 +1,8 @@
-<div class="row">
+ <div class="row">
 <div class="col s12">
 <div class="row">
 <div class="col s12 drawchintantable">
-<?php $this->chintantable->createsearch(" List of photogallerycategory");?>
+<?php $this->chintantable->createsearch(" List of Photo Gallery Category");?>
 <table class="highlight responsive-table">
 <thead>
 <tr>
