@@ -78,6 +78,17 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="file-field input-field col m6 s12">
+				<div class="btn blue darken-4">
+					<span>Cover Image</span>
+					<input name="coverimage" type="file" multiple>
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text" placeholder="Upload one or more files" value="<?php echo set_value('coverimage');?>">
+				</div>
+			</div>
+		</div>
 		
 		<div class="row">
 			<div class="input-field col m6 s12">
@@ -89,6 +100,24 @@
 			<div class="input-field col m6 s12">
 				<textarea name="address" class="materialize-textarea" length="120"><?php echo set_value( 'address');?></textarea>
 				<label>Address</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<textarea name="about" class="materialize-textarea" length="120"><?php echo set_value( 'about');?></textarea>
+				<label>About</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<textarea name="hobbies" class="materialize-textarea" length="120"><?php echo set_value( 'hobbies');?></textarea>
+				<label>Hobbies</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<label for="profession">Profession</label>
+				<input type="text" id="profession" name="profession" value="<?php echo set_value('profession');?>">
 			</div>
 		</div>
 		

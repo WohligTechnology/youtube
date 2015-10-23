@@ -32,7 +32,7 @@ class User_model extends CI_Model
 	}
 	
 	
-	public function create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website)
+	public function create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website,$about,$hobbies,$profession,$coverimage)
 	{
 		$data  = array(
 			'name' => $name,
@@ -46,7 +46,11 @@ class User_model extends CI_Model
 			'logintype' => $logintype,
 			'contact' => $contact,
 			'dob' => $dob,
-			'website' => $website
+			'website' => $website,
+			'about' => $about,
+			'hobbies' => $hobbies,
+			'profession' => $profession,
+			'coverimage' => $coverimage
 		);
 		$query=$this->db->insert( 'user', $data );
 		$id=$this->db->insert_id();
@@ -90,7 +94,7 @@ class User_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website)
+	public function edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website,$about,$hobbies,$profession,$coverimage)
 	{
 		$data  = array(
 			'name' => $name,
@@ -103,7 +107,11 @@ class User_model extends CI_Model
 			'logintype' => $logintype,
 			'contact' => $contact,
             'dob' => $dob,
-			'website' => $website
+			'website' => $website,
+			'about' => $about,
+			'hobbies' => $hobbies,
+			'profession' => $profession,
+			'coverimage' => $coverimage
 		);
 		if($password != "")
 			$data['password'] =md5($password);
@@ -509,6 +517,12 @@ class User_model extends CI_Model
     	 $query=$this->db->query("SELECT COUNT(*) as `usercount` FROM `user`")->row();
     	 $usercount=$query->usercount;
     	 return $usercount;
+    }
+    public function getCoverImageById($id)
+    {
+        $query = $this->db->query('SELECT `coverimage` FROM `user` WHERE `id`=('.$this->db->escape($id).')')->row();
+
+        return $query;
     }
 }
 ?>

@@ -293,35 +293,30 @@ $elements[0]->sort="1";
 $elements[0]->header="ID";
 $elements[0]->alias="id";
 
-$elements=array();
 $elements[1]=new stdClass();
 $elements[1]->field="`youtube_photogallerycategory`.`order`";
 $elements[1]->sort="1";
 $elements[1]->header="Order";
 $elements[1]->alias="order";
 
-$elements=array();
 $elements[2]=new stdClass();
 $elements[2]->field="`youtube_photogallerycategory`.`status`";
 $elements[2]->sort="1";
 $elements[2]->header="Status";
 $elements[2]->alias="status";
 
-$elements=array();
 $elements[3]=new stdClass();
 $elements[3]->field="`youtube_photogallerycategory`.`name`";
 $elements[3]->sort="1";
 $elements[3]->header="Name";
 $elements[3]->alias="name";
 
-$elements=array();
 $elements[4]=new stdClass();
 $elements[4]->field="`youtube_photogallerycategory`.`image`";
 $elements[4]->sort="1";
 $elements[4]->header="Image";
 $elements[4]->alias="image";
 
-$elements=array();
 $elements[5]=new stdClass();
 $elements[5]->field="`youtube_photogallerycategory`.`timestamp`";
 $elements[5]->sort="1";
@@ -756,7 +751,7 @@ $this->load->view("json",$data);
         if (empty($data)) {
             $data['message'] = 0;
         } else {
-            $data['message'] = $this->RestApi_model->signIn($email, $password);
+            $data['message'] = $this->restapi_model->signIn($email, $password);
         }
         $this->load->view('json', $data);
     }
@@ -780,16 +775,15 @@ $this->load->view("json",$data);
         $id = $data['id'];
         $name = $data['name'];
         $email = $data['email'];
-        $oldpassword = $data['oldpassword'];
-        $newpassword = $data['newpassword'];
         $contact = $data['contact'];
         $address = $data['address'];
         $website = $data['website'];
         $dob = $data['dob'];
+        $image = $data['image'];
         if (empty($data)) {
             $data['message'] = 0;
         } else {
-            $data['message'] = $this->restapi_model->editProfile($id, $name, $email,$oldpassword,$newpassword,$contact,$address, $website,  $dob);
+            $data['message'] = $this->restapi_model->editProfile($id, $name, $email,$contact,$address, $website,  $dob,$image);
         }
         $this->load->view('json', $data);
     }

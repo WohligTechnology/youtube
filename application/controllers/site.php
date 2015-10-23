@@ -78,6 +78,9 @@ class Site extends CI_Controller
             $address=$this->input->post('address');
             $dob=$this->input->post('dob');
             $website=$this->input->post('website');
+            $about=$this->input->post('about');
+            $hobbies=$this->input->post('hobbies');
+            $profession=$this->input->post('profession');
        
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -112,9 +115,79 @@ class Site extends CI_Controller
                     //return false;
                 }
                 
+			} $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                    //return false;
+                }  
+                else
+                {
+                    //print_r($this->image_lib->dest_image);
+                    //dest_image
+                    $image=$this->image_lib->dest_image;
+                    //return false;
+                }
+                
 			}
+
+
+            // COVERIMAGE
+
+            $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'coverimage';
+            $coverimage = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $coverimage = $uploaddata['file_name'];
+                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
+                $config_r['maintain_ratio'] = true;
+                $config_t['create_thumb'] = false; ///add this
+                $config_r['width'] = 800;
+                $config_r['height'] = 800;
+                $config_r['quality'] = 100;
+
+                // end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if (!$this->image_lib->resize()) {
+                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
+
+                    // return false;
+                } else {
+
+                    // print_r($this->image_lib->dest_image);
+                    // dest_image
+
+                    $coverimage = $this->image_lib->dest_image;
+
+                    // return false;
+                }
+            }
             
-			if($this->user_model->create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website)==0)
+			if($this->user_model->create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website,$about,$hobbies,$profession,$coverimage)==0)
 			$data['alerterror']="New user could not be created.";
 			else
 			$data['alertsuccess']="User created Successfully.";
@@ -260,6 +333,9 @@ class Site extends CI_Controller
             $address=$this->input->post('address');
             $dob=$this->input->post('dob');
             $website=$this->input->post('website');
+            $about=$this->input->post('about');
+            $hobbies=$this->input->post('hobbies');
+            $profession=$this->input->post('profession');
 //            $category=$this->input->get_post('category');
             
             $config['upload_path'] = './uploads/';
@@ -303,8 +379,52 @@ class Site extends CI_Controller
                // print_r($image);
                 $image=$image->image;
             }
+
+              // COVERIMAGE
+
+            $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'coverimage';
+            $coverimage = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $coverimage = $uploaddata['file_name'];
+                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
+                $config_r['maintain_ratio'] = true;
+                $config_t['create_thumb'] = false; ///add this
+                $config_r['width'] = 800;
+                $config_r['height'] = 800;
+                $config_r['quality'] = 100;
+
+                // end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if (!$this->image_lib->resize()) {
+                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
+
+                    // return false;
+                } else {
+
+                    // print_r($this->image_lib->dest_image);
+                    // dest_image
+
+                    $coverimage = $this->image_lib->dest_image;
+
+                    // return false;
+                }
+            }
+
+            if ($coverimage == '') {
+                $coverimage = $this->user_model->getCoverImageById($id);
+
+                // print_r($coverimage);
+
+                $coverimage = $coverimage->coverimage;
+            }
             
-			if($this->user_model->edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website)==0)
+			if($this->user_model->edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website,$about,$hobbies,$profession,$coverimage)==0)
 			$data['alerterror']="User Editing was unsuccesful";
 			else
 			$data['alertsuccess']="User edited Successfully.";
@@ -2592,5 +2712,217 @@ $data["redirect"]="site/viewenquiry";
 $this->load->view("redirect",$data);
 }
 
+
+// user multiple images
+
+public function viewuserimages()
+{
+$access=array("1");
+$this->checkaccess($access);
+$data["page"]="viewuserimages";
+$data["before1"]=$this->input->get('id');
+$data["before2"]=$this->input->get('id');
+$data["base_url"]=site_url("site/viewuserimagesjson");
+$data["title"]="View userimages";
+$this->load->view("templatewith2",$data);
+}
+function viewuserimagesjson()
+{
+$elements=array();
+$elements[0]=new stdClass();
+$elements[0]->field="`youtube_userimages`.`id`";
+$elements[0]->sort="1";
+$elements[0]->header="ID";
+$elements[0]->alias="id";
+$elements[1]=new stdClass();
+$elements[1]->field="`youtube_userimages`.`userimagescategory`";
+$elements[1]->sort="1";
+$elements[1]->header="Photo Gallery Category";
+$elements[1]->alias="userimagescategory";
+$search=$this->input->get_post("search");
+$pageno=$this->input->get_post("pageno");
+$orderby=$this->input->get_post("orderby");
+$orderorder=$this->input->get_post("orderorder");
+$maxrow=$this->input->get_post("maxrow");
+if($maxrow=="")
+{
+$maxrow=20;
+}
+if($orderby=="")
+{
+$orderby="id";
+$orderorder="ASC";
+}
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `youtube_userimages`");
+$this->load->view("json",$data);
+}
+
+public function createuserimages()
+{
+$access=array("1");
+$this->checkaccess($access);
+$data["page"]="createuserimages";
+$data["page2"]="block/photoblock";
+$data["before1"]=$this->input->get('id');
+$data["before2"]=$this->input->get('id');
+$data[ 'user' ] =$this->user_model->getuserdropdown();
+$data["title"]="Create userimages";
+$this->load->view("templatewith2",$data);
+}
+public function createuserimagessubmit() 
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->form_validation->set_rules("userimagescategory","Photo Gallery Category","trim");
+$this->form_validation->set_rules("order","Order","trim");
+$this->form_validation->set_rules("status","Status","trim");
+$this->form_validation->set_rules("image","Image","trim");
+$this->form_validation->set_rules("timestamp","Timestamp","trim");
+if($this->form_validation->run()==FALSE)
+{
+$data["alerterror"]=validation_errors();
+$data["page"]="createuserimages";
+$data[ 'user' ] =$this->user_model->getuserdropdown();
+$data["title"]="Create userimages";
+$this->load->view("template",$data);
+}
+else
+{
+$user=$this->input->get_post("user");
+ $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                    //return false;
+                }  
+                else
+                {
+                    //print_r($this->image_lib->dest_image);
+                    //dest_image
+                    $image=$this->image_lib->dest_image;
+                    //return false;
+                }
+                
+			}
+if($this->userimages_model->create($user,$image)==0)
+$data["alerterror"]="New userimages could not be created.";
+else
+$data["alertsuccess"]="userimages created Successfully.";
+$data["redirect"]="site/viewuserimages?id=".$userimagescategory;
+$this->load->view("redirect2",$data);
+}
+}
+public function edituserimages()
+{
+$access=array("1");
+$this->checkaccess($access);
+$data["page"]="edituserimages";
+$data["page2"]="block/photoblock";
+$data["before1"]=$this->input->get('userimagescategoryid');
+$data["before2"]=$this->input->get('userimagescategoryid');
+$data[ 'activemenu' ] = 'photo gallery category';
+$data[ 'user' ] =$this->user_model->getuserdropdown();
+$data["title"]="Edit userimages";
+$data["before"]=$this->userimages_model->beforeedit($this->input->get("id"));
+$this->load->view("templatewith2",$data);
+}
+public function edituserimagessubmit()
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->form_validation->set_rules("id","ID","trim");
+$this->form_validation->set_rules("user","user","trim");
+$this->form_validation->set_rules("image","Image","trim");
+if($this->form_validation->run()==FALSE)
+{
+$data["alerterror"]=validation_errors();
+$data["page"]="edituserimages";
+$data[ 'user' ] =$this->user_model->getuserdropdown();
+$data["title"]="Edit userimages";
+$data["before"]=$this->userimages_model->beforeedit($this->input->get("id"));
+$this->load->view("template",$data);
+}
+else
+{
+$id=$this->input->get_post("id");
+$user=$this->input->get_post("user");
+ $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                    //return false;
+                }  
+                else
+                {
+                    //print_r($this->image_lib->dest_image);
+                    //dest_image
+                    $image=$this->image_lib->dest_image;
+                    //return false;
+                }
+                
+			}
+            
+            if($image=="")
+            {
+            $image=$this->userimages_model->getimagebyid($id);
+               // print_r($image);
+                $image=$image->image;
+            }
+
+if($this->userimages_model->edit($id,$userimagescategory,$order,$status,$image,$timestamp)==0)
+$data["alerterror"]="New userimages could not be Updated.";
+else
+$data["alertsuccess"]="userimages Updated Successfully.";
+$data["redirect"]="site/viewuserimages?id=".$userimagescategory;
+$this->load->view("redirect2",$data);
+}
+}
+public function deleteuserimages()
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->userimages_model->delete($this->input->get("id"));
+$userimagescategory=$this->input->get("userimagescategoryid");
+$data["redirect"]="site/viewuserimages?id=".$userimagescategory;
+$this->load->view("redirect2",$data);
+}
 }
 ?>

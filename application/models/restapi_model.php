@@ -13,7 +13,7 @@ class restapi_model extends CI_Model
 				$num=$query1->num_rows();
         if($num == 0)
         {
-            $query = $this->db->query('INSERT INTO `user`( `name`, `email`, `password`,`contact`,`logintype`,`accesslevel`,`status`) VALUES ('.$this->db->escape($name).','.$this->db->escape($email).','.$this->db->escape($password).','.$this->db->escape($contact).",'1','3','1')");
+            $query = $this->db->query('INSERT INTO `user`( `name`, `email`, `password`,`contact`,`logintype`,`accesslevel`,`status`) VALUES ('.$this->db->escape($name).','.$this->db->escape($email).','.$this->db->escape($password).','.$this->db->escape($contact).",'Email','3','1')");
             $id = $this->db->insert_id();
 
           
@@ -26,6 +26,9 @@ class restapi_model extends CI_Model
             }
        
     }
+        else{
+        return false;
+        }
     }
     public function signIn($email, $password)
     {
@@ -35,7 +38,7 @@ class restapi_model extends CI_Model
             $user = $query->row();
             $user = $user->id;
             $query1 = $this->db->query("UPDATE `user` SET `forgotpassword`='' WHERE `email`=(".$this->db->escape($email).')');
-            $newdata = $this->db->query('SELECT `id`, `name`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `email`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `pincode`, `facebook`, `twitter`, `google`, `country`, `instagram`, `contact`, `eventnotification`, `photonotification`, `videonotification`, `blognotification`, `coverimage`, `forgotpassword` FROM `user` WHERE `id`=('.$this->db->escape($user).')')->row();
+            $newdata = $this->db->query('SELECT `id`, `name`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `address`, `contact`, `dob`, `street`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`, `website` FROM `user` WHERE `id`=('.$this->db->escape($user).')')->row();
             $this->session->set_userdata($newdata);
             //print_r($newdata);
             return $newdata;
@@ -55,28 +58,15 @@ class restapi_model extends CI_Model
             }
         }
     }
-
-   
-
-    public function profileSubmit($id, $name, $email, $password, $dob, $contact)
+    public function editProfile($id, $name, $email,$contact,$address, $website,  $dob,$image)
     {
-        $password = md5($password);
-        $query = $this->db->query('UPDATE `user`
- SET `name` = '.$this->db->escape($name).', `email` = '.$this->db->escape($email).',`password` = '.$this->db->escape($password).',`dob` = '.$this->db->escape($dob).',`contact` = '.$this->db->escape($contact).'
- WHERE id = ('.$this->db->escape($id).')');
-        if (!$query) {
-            return  0;
-        } else {
-            return  1;
-        }
-    }
-    public function editProfile($id, $name, $email,$oldpassword,$newpassword,$contact,$address, $website,  $dob)
-    {
+        $dob = strtotime($dob);
+        $dob=date("Y-m-d", $dob);
          $query = $this->db->query('UPDATE `user`
- SET `name` = '.$this->db->escape($name).', `email` = '.$this->db->escape($email).',`dob` = '.$this->db->escape($dob).',`contact` = '.$this->db->escape($contact).',`address` = '.$this->db->escape($address).',`website` = '.$this->db->escape($website).'
+ SET `name` = '.$this->db->escape($name).', `email` = '.$this->db->escape($email).',`dob` = '.$this->db->escape($dob).',`contact` = '.$this->db->escape($contact).',`address` = '.$this->db->escape($address).',`website` = '.$this->db->escape($website).',`image` = '.$this->db->escape($image).'
  WHERE id = ('.$this->db->escape($id).')');
 
-        $query1 = $this->db->query('SELECT `id`, `name`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `pincode`, `facebook`, `twitter`, `google`, `country`, `instagram`, `contact` FROM `user` WHERE `id`=('.$this->db->escape($id).')')->row();
+        $query1 = $this->db->query('SELECT `id`, `name`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`,  `dob`, `street`, `address`, `city`, `state`, `pincode`, `google`, `country`,`contact` FROM `user` WHERE `id`=('.$this->db->escape($id).')')->row();
         if ($query) {
             return  $query1;
         } else {

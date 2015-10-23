@@ -100,13 +100,48 @@
             </div>
         </div>
 		
-
+        <div class="row">
+            <div class="file-field input-field col s12 m6">
+               <span class="img-center big">
+                <?php if($before->coverimage != "") { ?>
+                <img src="<?php echo base_url('uploads').'/'.$before->coverimage; ?>" > <?php } ?></span>
+                <div class="btn blue darken-4">
+                    <span>Cover Image</span>
+                    <input name="coverimage" type="file" multiple>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload one or more files" value="<?php echo set_value('coverimage',$before->coverimage);?>">
+                    <?php if($before->coverimage == "") { } else {
+                    ?>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
 		<div class="row">
 			<div class="input-field col m6 s12">
 				<textarea name="address" class="materialize-textarea" length="120"><?php echo set_value( 'address',$before->address);?></textarea>
 				<label>Address</label>
 			</div>
 		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<textarea name="about" class="materialize-textarea" length="120"><?php echo set_value( 'about',$before->about);?></textarea>
+				<label>About</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<textarea name="hobbies" class="materialize-textarea" length="120"><?php echo set_value( 'hobbies',$before->hobbies);?></textarea>
+				<label>Hobbies</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<label for="profession">profession</label>
+				<input type="text" id="profession" name="profession" value="<?php echo set_value('profession',$before->profession);?>">
+			</div>
+		</div>
+
 
 				
 														<div class=" form-group">
