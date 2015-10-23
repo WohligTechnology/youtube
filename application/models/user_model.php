@@ -226,6 +226,12 @@ class User_model extends CI_Model
 		else
 			return  1;
 	}
+     public function getCoverImageById($id)
+    {
+        $query = $this->db->query('SELECT `coverimage` FROM `user` WHERE `id`=('.$this->db->escape($id).')')->row();
+
+        return $query;
+    }
 	function editaddress($id,$address,$city,$pincode)
 	{
 		$data  = array(
@@ -518,11 +524,6 @@ class User_model extends CI_Model
     	 $usercount=$query->usercount;
     	 return $usercount;
     }
-    public function getCoverImageById($id)
-    {
-        $query = $this->db->query('SELECT `coverimage` FROM `user` WHERE `id`=('.$this->db->escape($id).')')->row();
 
-        return $query;
-    }
 }
 ?>

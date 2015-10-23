@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class userimages_model extends CI_Model
 {
-public function create($image)
+public function create($user,$image)
 {
-$data=array("image" => $image);
+$data=array("image" => $image,"user" => $user);
 $query=$this->db->insert( "userimages", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -19,9 +19,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("userimages")->row();
 return $query;
 }
-public function edit($id,$image)
+public function edit($id,$user,$image)
 {
-$data=array("image" => $image);
+$data=array("image" => $image,"user" => $user);
 $this->db->where( "id", $id );
 $query=$this->db->update( "userimages", $data );
 return 1;

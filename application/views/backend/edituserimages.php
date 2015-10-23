@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Edit Photo Gallery</h4>
+<h4 class="pad-left-15">Edit User Images</h4>
 </div>
 </div>
 <div class="row">

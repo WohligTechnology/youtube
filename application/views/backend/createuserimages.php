@@ -1,12 +1,12 @@
 <div class="row">
 <div class="col s12">
-<h4 class="pad-left-15">Create Photo Gallery</h4>
+<h4 class="pad-left-15">Create User Images</h4>
 </div>
 <form class='col s12' method='post' action='<?php echo site_url("site/createuserimagessubmit");?>' enctype= 'multipart/form-data'>
 <div class=" row">
 <div class=" input-field col s6">
-<?php echo form_dropdown("user",$user,set_value('user'));?>
-<label>U</label>
+<?php echo form_dropdown("user",$user,set_value('user',$this->input->get('id')));?>
+<label>User</label>
 </div>
 </div>
   <div class="row">

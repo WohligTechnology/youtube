@@ -286,11 +286,13 @@ class Site extends CI_Controller
 		$data['accesslevel']=$this->user_model->getaccesslevels();
 		$data[ 'logintype' ] =$this->user_model->getlogintypedropdown();
 		$data['before']=$this->user_model->beforeedit($this->input->get('id'));
+		$data['before1']=$this->input->get('id');
+		$data['before2']=$this->input->get('id');
 		$data['page']='edituser';
 		$data[ 'activemenu' ] = 'users';
-		// $data['page2']='block/userblock';
+		 $data['page2']='block/userblock';
 		$data['title']='Edit User';
-		$this->load->view('template',$data);
+		$this->load->view('templatewith2',$data);
 	}
 	function editusersubmit()
 	{
@@ -2720,25 +2722,40 @@ public function viewuserimages()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewuserimages";
+$data["page2"]="block/userblock";
+$data["activemenu"]="users";
 $data["before1"]=$this->input->get('id');
 $data["before2"]=$this->input->get('id');
-$data["base_url"]=site_url("site/viewuserimagesjson");
+$data["base_url"]=site_url("site/viewuserimagesjson?id=".$this->input->get('id'));
 $data["title"]="View userimages";
 $this->load->view("templatewith2",$data);
 }
 function viewuserimagesjson()
 {
+$id=$this->input->get('id');
 $elements=array();
 $elements[0]=new stdClass();
-$elements[0]->field="`youtube_userimages`.`id`";
+$elements[0]->field="`userimages`.`id`";
 $elements[0]->sort="1";
 $elements[0]->header="ID";
 $elements[0]->alias="id";
 $elements[1]=new stdClass();
-$elements[1]->field="`youtube_userimages`.`userimagescategory`";
+$elements[1]->field="`userimages`.`user`";
 $elements[1]->sort="1";
-$elements[1]->header="Photo Gallery Category";
-$elements[1]->alias="userimagescategory";
+$elements[1]->header="user";
+$elements[1]->alias="user";
+    
+$elements[2]=new stdClass();
+$elements[2]->field="`userimages`.`image`";
+$elements[2]->sort="1";
+$elements[2]->header="Image";
+$elements[2]->alias="image";
+    
+$elements[3]=new stdClass();
+$elements[3]->field="`userimages`.`user`";
+$elements[3]->sort="1";
+$elements[3]->header="userid";
+$elements[3]->alias="userid";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -2753,7 +2770,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `youtube_userimages`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `userimages`","WHERE `userimages`.`user`=$id");
 $this->load->view("json",$data);
 }
 
@@ -2762,7 +2779,8 @@ public function createuserimages()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createuserimages";
-$data["page2"]="block/photoblock";
+$data["page2"]="block/userblock";
+$data["activemenu"]="users";
 $data["before1"]=$this->input->get('id');
 $data["before2"]=$this->input->get('id');
 $data[ 'user' ] =$this->user_model->getuserdropdown();
@@ -2773,11 +2791,7 @@ public function createuserimagessubmit()
 {
 $access=array("1");
 $this->checkaccess($access);
-$this->form_validation->set_rules("userimagescategory","Photo Gallery Category","trim");
-$this->form_validation->set_rules("order","Order","trim");
-$this->form_validation->set_rules("status","Status","trim");
 $this->form_validation->set_rules("image","Image","trim");
-$this->form_validation->set_rules("timestamp","Timestamp","trim");
 if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
@@ -2827,7 +2841,7 @@ if($this->userimages_model->create($user,$image)==0)
 $data["alerterror"]="New userimages could not be created.";
 else
 $data["alertsuccess"]="userimages created Successfully.";
-$data["redirect"]="site/viewuserimages?id=".$userimagescategory;
+$data["redirect"]="site/viewuserimages?id=".$user;
 $this->load->view("redirect2",$data);
 }
 }
@@ -2836,10 +2850,10 @@ public function edituserimages()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="edituserimages";
-$data["page2"]="block/photoblock";
+$data["page2"]="block/userblock";
+$data["activemenu"]="users";
 $data["before1"]=$this->input->get('userimagescategoryid');
 $data["before2"]=$this->input->get('userimagescategoryid');
-$data[ 'activemenu' ] = 'photo gallery category';
 $data[ 'user' ] =$this->user_model->getuserdropdown();
 $data["title"]="Edit userimages";
 $data["before"]=$this->userimages_model->beforeedit($this->input->get("id"));
@@ -2902,16 +2916,16 @@ $user=$this->input->get_post("user");
             
             if($image=="")
             {
-            $image=$this->userimages_model->getimagebyid($id);
+            $image=$this->user_model->getCoverImageById($id);
                // print_r($image);
                 $image=$image->image;
             }
 
-if($this->userimages_model->edit($id,$userimagescategory,$order,$status,$image,$timestamp)==0)
+if($this->userimages_model->edit($id,$user,$image)==0)
 $data["alerterror"]="New userimages could not be Updated.";
 else
 $data["alertsuccess"]="userimages Updated Successfully.";
-$data["redirect"]="site/viewuserimages?id=".$userimagescategory;
+$data["redirect"]="site/viewuserimages?id=".$user;
 $this->load->view("redirect2",$data);
 }
 }
@@ -2920,8 +2934,8 @@ public function deleteuserimages()
 $access=array("1");
 $this->checkaccess($access);
 $this->userimages_model->delete($this->input->get("id"));
-$userimagescategory=$this->input->get("userimagescategoryid");
-$data["redirect"]="site/viewuserimages?id=".$userimagescategory;
+$userid=$this->input->get("userid");
+$data["redirect"]="site/viewuserimages?id=".$userid;
 $this->load->view("redirect2",$data);
 }
 }
