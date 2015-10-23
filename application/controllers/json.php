@@ -787,4 +787,16 @@ $this->load->view("json",$data);
         }
         $this->load->view('json', $data);
     }
+  public function logout()
+    {
+        $this->session->sess_destroy();
+        $data['message'] = true;
+        $this->load->view('json', $data);
+    }
+ public function getuserdetails(){
+ $id=$this->input->get('id');
+$data['message'] = $this->restapi_model->getuserdetails($id);
+     $this->load->view('json', $data);
+ }
+ 
 } ?>

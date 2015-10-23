@@ -486,15 +486,16 @@ class User_model extends CI_Model
 
             $query2=$this->db->query("INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `dob`, `street`, `address`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`) VALUES (NULL, '$user_profile->displayName', '', '$user_profile->email', '3', CURRENT_TIMESTAMP, '1', '$user_profile->photoURL', '', '$user_profile->identifier', '$provider', '$user_profile->birthYear-$user_profile->birthMonth-$user_profile->birthDay', '', '$user_profile->address,$user_profile->region', '$user_profile->city', '', '$user_profile->country', '', '$facebookid', '$googleid', '$twitterid')");
             $id=$this->db->insert_id();
-            $newdata = array(
-                'email'     => $user_profile->email,
-                'password' => "",
-                'logged_in' => true,
-                'id'=> $id,
-                'name'=> $user_profile->displayName,
-                'image'=> $user_profile->photoURL,
-                'logintype'=>$provider
-            );
+            $newdata = $this->db->query('SELECT  `user`.`id`, `user`.`name`, `user`.`email`, `user`.`accesslevel`, `user`.`timestamp`, `user`.`status`, `user`.`image`, `user`.`username`, `user`.`socialid`, `user`.`logintype`, `user`.`address`, `user`.`contact`, `user`.`dob`, `user`.`street`, `user`.`city`, `user`.`state`, `user`.`country`, `user`.`pincode`, `user`.`facebook`, `user`.`google`, `user`.`twitter`, `user`.`website`, `user`.`forgotpassword`, `user`.`coverimage`, `user`.`about`, `user`.`hobbies`, `user`.`profession`,`userimages`.`image` FROM `user` LEFT OUTER JOIN `userimages` ON `userimages`.`user`=`user`.`id` WHERE `user`.`id`=('.$this->db->escape($user).')')->row();
+//            $newdata = array(
+//                'email'     => $user_profile->email,
+//                'password' => "",
+//                'logged_in' => true,
+//                'id'=> $id,
+//                'name'=> $user_profile->displayName,
+//                'image'=> $user_profile->photoURL,
+//                'logintype'=>$provider
+//            );
 
             $this->session->set_userdata($newdata);
 
@@ -504,15 +505,7 @@ class User_model extends CI_Model
         else
         {
             $query=$query->row();
-            $newdata = array(
-                'email'     => $user_profile->email,
-                'password' => "",
-                'logged_in' => true,
-                'id'=> $query->id,
-                'name'=> $user_profile->displayName,
-                'image'=> $user_profile->photoURL,
-                'logintype'=>$provider
-            );
+          $newdata = $this->db->query('SELECT  `user`.`id`, `user`.`name`, `user`.`email`, `user`.`accesslevel`, `user`.`timestamp`, `user`.`status`, `user`.`image`, `user`.`username`, `user`.`socialid`, `user`.`logintype`, `user`.`address`, `user`.`contact`, `user`.`dob`, `user`.`street`, `user`.`city`, `user`.`state`, `user`.`country`, `user`.`pincode`, `user`.`facebook`, `user`.`google`, `user`.`twitter`, `user`.`website`, `user`.`forgotpassword`, `user`.`coverimage`, `user`.`about`, `user`.`hobbies`, `user`.`profession`,`userimages`.`image` FROM `user` LEFT OUTER JOIN `userimages` ON `userimages`.`user`=`user`.`id` WHERE `user`.`id`=('.$this->db->escape($user).')')->row();
 
             $this->session->set_userdata($newdata);
 
