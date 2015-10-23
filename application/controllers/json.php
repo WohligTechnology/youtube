@@ -347,6 +347,7 @@ $this->load->view("json",$data);
 }
 function getallphotogallery()
 {
+$id=$this->input->get_post("id");
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`youtube_photogallery`.`id`";
@@ -397,7 +398,7 @@ if($orderby=="")
 $orderby="order";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `youtube_photogallery`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `youtube_photogallery`","WHERE `youtube_photogallery`.`photogallerycategory`=$id");
 $this->load->view("json",$data);
 }
 public function getsinglephotogallery()
