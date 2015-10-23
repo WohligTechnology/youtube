@@ -134,56 +134,48 @@ $elements[0]->sort="1";
 $elements[0]->header="ID";
 $elements[0]->alias="id";
 
-$elements=array();
 $elements[1]=new stdClass();
 $elements[1]->field="`youtube_events`.`status`";
 $elements[1]->sort="1";
 $elements[1]->header="Status";
 $elements[1]->alias="status";
 
-$elements=array();
 $elements[2]=new stdClass();
 $elements[2]->field="`youtube_events`.`name`";
 $elements[2]->sort="1";
 $elements[2]->header="Name";
 $elements[2]->alias="name";
 
-$elements=array();
 $elements[3]=new stdClass();
 $elements[3]->field="`youtube_events`.`venue`";
 $elements[3]->sort="1";
 $elements[3]->header="Venue";
 $elements[3]->alias="venue";
 
-$elements=array();
 $elements[4]=new stdClass();
 $elements[4]->field="`youtube_events`.`image`";
 $elements[4]->sort="1";
 $elements[4]->header="Image";
 $elements[4]->alias="image";
 
-$elements=array();
 $elements[5]=new stdClass();
 $elements[5]->field="`youtube_events`.`url`";
 $elements[5]->sort="1";
 $elements[5]->header="Url";
 $elements[5]->alias="url";
 
-$elements=array();
 $elements[6]=new stdClass();
 $elements[6]->field="`youtube_events`.`starttime`";
 $elements[6]->sort="1";
 $elements[6]->header="Start Time";
 $elements[6]->alias="starttime";
 
-$elements=array();
 $elements[7]=new stdClass();
 $elements[7]->field="`youtube_events`.`timestamp`";
 $elements[7]->sort="1";
 $elements[7]->header="Timestamp";
 $elements[7]->alias="timestamp";
 
-$elements=array();
 $elements[8]=new stdClass();
 $elements[8]->field="`youtube_events`.`content`";
 $elements[8]->sort="1";
@@ -200,7 +192,7 @@ if($maxrow=="")
 }
 if($orderby=="")
 {
-$orderby="id";
+$orderby="order";
 $orderorder="ASC";
 }
 $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `youtube_events`");
@@ -346,7 +338,7 @@ if($maxrow=="")
 }
 if($orderby=="")
 {
-$orderby="id";
+$orderby="order";
 $orderorder="ASC";
 }
 $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `youtube_photogallerycategory`");
@@ -367,35 +359,30 @@ $elements[0]->sort="1";
 $elements[0]->header="ID";
 $elements[0]->alias="id";
 
-$elements=array();
 $elements[1]=new stdClass();
 $elements[1]->field="`youtube_photogallery`.`photogallerycategory`";
 $elements[1]->sort="1";
 $elements[1]->header="Photo Gallery Category";
 $elements[1]->alias="photogallerycategory";
 
-$elements=array();
 $elements[2]=new stdClass();
 $elements[2]->field="`youtube_photogallery`.`order`";
 $elements[2]->sort="1";
 $elements[2]->header="Order";
 $elements[2]->alias="order";
 
-$elements=array();
 $elements[3]=new stdClass();
 $elements[3]->field="`youtube_photogallery`.`status`";
 $elements[3]->sort="1";
 $elements[3]->header="Status";
 $elements[3]->alias="status";
 
-$elements=array();
 $elements[4]=new stdClass();
 $elements[4]->field="`youtube_photogallery`.`image`";
 $elements[4]->sort="1";
 $elements[4]->header="Image";
 $elements[4]->alias="image";
 
-$elements=array();
 $elements[5]=new stdClass();
 $elements[5]->field="`youtube_photogallery`.`timestamp`";
 $elements[5]->sort="1";
@@ -412,7 +399,7 @@ if($maxrow=="")
 }
 if($orderby=="")
 {
-$orderby="id";
+$orderby="order";
 $orderorder="ASC";
 }
 $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `youtube_photogallery`");

@@ -26,6 +26,7 @@ class restapi_model extends CI_Model
             }
        
     }
+    }
     public function signIn($email, $password)
     {
         $password = md5($password);
