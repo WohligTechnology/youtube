@@ -376,7 +376,7 @@ $elements[4]=new stdClass();
 $elements[4]->field="`youtube_photogallery`.`image`";
 $elements[4]->sort="1";
 $elements[4]->header="Image";
-$elements[4]->alias="image";
+$elements[4]->alias="src";
 
 $elements[5]=new stdClass();
 $elements[5]->field="`youtube_photogallery`.`timestamp`";
