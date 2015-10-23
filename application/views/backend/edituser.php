@@ -44,6 +44,18 @@
 				<input type="text" id="contact" name="contact" value="<?php echo set_value('contact',$before->contact);?>">
 			</div>
 		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<label for="website">Website</label>
+				<input type="text" id="website" name="website" value="<?php echo set_value('website',$before->website);?>">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<label for="dob">Date of birth</label>
+				<input type="date" id="dob" name="dob" value="<?php echo set_value('dob',$before->dob);?>">
+			</div>
+		</div>
 
 		<div class="row">
 			<div class="input-field col m6 s12">

@@ -76,7 +76,8 @@ class Site extends CI_Controller
             $contact=$this->input->post('contact');
             $logintype=$this->input->post('logintype');
             $address=$this->input->post('address');
-//            $category=$this->input->post('category');
+            $dob=$this->input->post('dob');
+            $website=$this->input->post('website');
        
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -113,7 +114,7 @@ class Site extends CI_Controller
                 
 			}
             
-			if($this->user_model->create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact)==0)
+			if($this->user_model->create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website)==0)
 			$data['alerterror']="New user could not be created.";
 			else
 			$data['alertsuccess']="User created Successfully.";
@@ -257,6 +258,8 @@ class Site extends CI_Controller
             $contact=$this->input->post('contact');
             $logintype=$this->input->post('logintype');
             $address=$this->input->post('address');
+            $dob=$this->input->post('dob');
+            $website=$this->input->post('website');
 //            $category=$this->input->get_post('category');
             
             $config['upload_path'] = './uploads/';
@@ -301,7 +304,7 @@ class Site extends CI_Controller
                 $image=$image->image;
             }
             
-			if($this->user_model->edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact)==0)
+			if($this->user_model->edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website)==0)
 			$data['alerterror']="User Editing was unsuccesful";
 			else
 			$data['alertsuccess']="User edited Successfully.";

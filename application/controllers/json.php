@@ -761,4 +761,49 @@ $id=$this->input->get_post("id");
 $data["message"]=$this->enquiry_model->getsingleenquiry($id);
 $this->load->view("json",$data);
 }
+  public function signIn()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $email = $data['email'];
+        $password = $data['password'];
+        if (empty($data)) {
+            $data['message'] = 0;
+        } else {
+            $data['message'] = $this->RestApi_model->signIn($email, $password);
+        }
+        $this->load->view('json', $data);
+    }
+ public function signUp()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $name = $data['name'];
+        $email = $data['email'];
+        $password = $data['password'];
+        $contact = $data['contact'];
+        if (empty($data)) {
+            $data['message'] = 0;
+        } else {
+            $data['message'] = $this->restapi_model->signUp($name, $email, $password,$contact);
+        }
+        $this->load->view('json', $data);
+    }
+ public function editProfile()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['id'];
+        $name = $data['name'];
+        $email = $data['email'];
+        $oldpassword = $data['oldpassword'];
+        $newpassword = $data['newpassword'];
+        $contact = $data['contact'];
+        $address = $data['address'];
+        $website = $data['website'];
+        $dob = $data['dob'];
+        if (empty($data)) {
+            $data['message'] = 0;
+        } else {
+            $data['message'] = $this->restapi_model->editProfile($id, $name, $email,$oldpassword,$newpassword,$contact,$address, $website,  $dob);
+        }
+        $this->load->view('json', $data);
+    }
 } ?>

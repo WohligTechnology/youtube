@@ -41,6 +41,18 @@
 		</div>
 		<div class="row">
 			<div class="input-field col m6 s12">
+				<label for="website">Website</label>
+				<input type="text" id="website" name="website" value="<?php echo set_value('website');?>">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
+				<label for="dob">Date of birth</label>
+				<input type="date" id="dob" name="dob" value="<?php echo set_value('dob');?>">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col m6 s12">
 			<select id="logintype" name="logintype" id="" value="<?php echo set_value('logintype');?>">
 			    <option value="Email">Email</option>
 			    <option value="Facebook">Facebook</option>
