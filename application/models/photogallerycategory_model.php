@@ -20,8 +20,8 @@ $query=$this->db->get("youtube_photogallerycategory")->row();
 return $query;
 }
 function getsinglephotogallerycategory($id){
-$this->db->where("id",$id);
-$query=$this->db->get("youtube_photogallerycategory")->row();
+$query=$this->db->query("SELECT * FROM `youtube_photogallerycategory` WHERE `id`='$id'")->row();
+		return $query;
 return $query;
 }
 public function edit($id,$order,$status,$name,$image,$timestamp)
