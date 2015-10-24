@@ -1033,6 +1033,7 @@ $url=$this->input->get_post("url");
 $starttime=$this->input->get_post("starttime");
 $timestamp=$this->input->get_post("timestamp");
 $content=$this->input->get_post("content");
+$startdate=$this->input->get_post("startdate");
  $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1067,7 +1068,7 @@ $content=$this->input->get_post("content");
                 }
                 
 			}
-if($this->events_model->create($status,$name,$venue,$image,$url,$starttime,$timestamp,$content)==0)
+if($this->events_model->create($status,$name,$venue,$image,$url,$starttime,$timestamp,$content,$startdate)==0)
 $data["alerterror"]="New events could not be created.";
 else
 $data["alertsuccess"]="events created Successfully.";
@@ -1119,6 +1120,7 @@ $url=$this->input->get_post("url");
 $starttime=$this->input->get_post("starttime");
 $timestamp=$this->input->get_post("timestamp");
 $content=$this->input->get_post("content");
+$startdate=$this->input->get_post("startdate");
  $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1161,7 +1163,7 @@ $content=$this->input->get_post("content");
                 $image=$image->image;
             }
 
-if($this->events_model->edit($id,$status,$name,$venue,$image,$url,$starttime,$timestamp,$content)==0)
+if($this->events_model->edit($id,$status,$name,$venue,$image,$url,$starttime,$timestamp,$content,$startdate)==0)
 $data["alerterror"]="New events could not be Updated.";
 else
 $data["alertsuccess"]="events Updated Successfully.";

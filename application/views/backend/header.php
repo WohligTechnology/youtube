@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title><?php echo $title;?> - BusinessApp</title>
+<title><?php echo $title;?> - Vidio</title>
 
 <head>
 	<link rel="shortcut icon" href="<?php echo base_url('assets').'/';?>img/favicon.png" type="image/png"/>
