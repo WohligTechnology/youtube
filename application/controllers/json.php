@@ -178,6 +178,12 @@ $elements[8]->sort="1";
 $elements[8]->header="Content";
 $elements[8]->alias="content";
 
+$elements[9]=new stdClass();
+$elements[9]->field="`youtube_events`.`startdate`";
+$elements[9]->sort="1";
+$elements[9]->header="startdate";
+$elements[9]->alias="startdate";
+
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");

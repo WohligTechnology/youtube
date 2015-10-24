@@ -5,6 +5,8 @@ class events_model extends CI_Model
 {
 public function create($status,$name,$venue,$image,$url,$starttime,$timestamp,$content,$startdate)
 {
+	$startdate = new DateTime($startdate);
+        $startdate = $startdate->format('Y-m-d');
 $data=array("status" => $status,"name" => $name,"venue" => $venue,"image" => $image,"url" => $url,"starttime" => $starttime,"content" => $content,"startdate" => $startdate);
 $query=$this->db->insert( "youtube_events", $data );
 $id=$this->db->insert_id();
@@ -26,6 +28,8 @@ return $query;
 }
 public function edit($id,$status,$name,$venue,$image,$url,$starttime,$timestamp,$content,$startdate)
 {
+	$startdate = new DateTime($startdate);
+        $startdate = $startdate->format('Y-m-d');
 $data=array("status" => $status,"name" => $name,"venue" => $venue,"image" => $image,"url" => $url,"starttime" => $starttime,"timestamp" => $timestamp,"content" => $content,"startdate" => $startdate);
 $this->db->where( "id", $id );
 $query=$this->db->update( "youtube_events", $data );

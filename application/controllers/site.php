@@ -1083,6 +1083,7 @@ $this->checkaccess($access);
 $data["page"]="editevents";
 $data[ 'activemenu' ] = 'events';
 $data[ 'status' ] =$this->user_model->getstatusdropdown();
+$data['exp'] = explode(':', $data['before']->starttime);
 $data["title"]="Edit events";
 $data["before"]=$this->events_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
