@@ -76,5 +76,25 @@ class restapi_model extends CI_Model
         $query->images=$this->db->query('SELECT `image` FROM `userimages` WHERE `user`=('.$this->db->escape($id).')')->result();
         return $query;
     }
+    
+    public function changePassword($id, $oldpassword, $newpassword, $confirmpassword) {
+        $oldpassword = md5($oldpassword);
+        $newpassword = md5($newpassword);
+        $confirmpassword = md5($confirmpassword);
+        if ($newpassword == $confirmpassword) {
+            $useridquery = $this->db->query("SELECT `id` FROM `user` WHERE `password`='$oldpassword'");
+            if ($useridquery->num_rows() == 0) {
+                return 0;
+            } else {
+                $query = $useridquery->row();
+                $userid = $query->id;
+                $updatequery = $this->db->query("UPDATE `user` SET `password`='$newpassword' WHERE `id`='$userid'");
+                return 1;
+            }
+        } else {
+//            echo "New password and confirm password do not match!!!";
+			return -1;
+        }
+    }
   
 }

@@ -795,5 +795,59 @@ $this->load->view("json",$data);
 $data['message'] = $this->restapi_model->getuserdetails($id);
      $this->load->view('json', $data);
  }
+ public function forgotPassword()
+    {
+        $email = $this->input->get_post('email');
+        $userid = $this->user_model->getIdByEmail($email);
+        $this->load->helper('string');
+        $randompassword = random_string('alnum', 8);
+        $data['message'] = $this->user_model->forgotPasswordSubmit($randompassword, $userid);
+        if ($userid == '') {
+            $data['message'] = 'Not A Valid Email.';
+            $this->load->view('json', $data);
+        } else {
+            $this->load->library('email');
+            $this->email->from('vigwohlig@gmail.com', 'Vidio');
+            $this->email->to($email);
+            $this->email->subject('Welcome to Vidio');
+
+            $message = "<html>
+
+      <body>
+    <div style='text-align:center;   width: 50%; margin: 0 auto;'>
+        <h4 style='font-size:1.5em;padding-bottom: 5px;color: #e82a96;'>Vidio</h4>
+        <p style='font-size: 1em;padding-bottom: 10px;'>Your password is:</p>
+        <p style='font-size: 1em;padding-bottom: 10px;'>$randompassword</p>
+    </div>
+    <div style='text-align:center;position: relative;'>
+        <p style=' position: absolute; top: 8%;left: 50%; transform: translatex(-50%); font-size: 1em;margin: 0; letter-spacing:2px; font-weight: bold;'>
+            Thank You
+        </p>
+    </div>
+</body>
+
+</html>";
+            $this->email->message($message);
+            $this->email->send();
+//        $data["message"] = $this->email->print_debugger();
+        $data['message'] = true;
+            $this->load->view('json', $data);
+        }
+    }
+ 
+ public function changePassword()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['id'];
+        $oldpassword = $data['oldpassword'];
+        $newpassword = $data['newpassword'];
+        $confirmpassword = $data['confirmpassword'];
+        if (empty($data)) {
+            $data['message'] = 0;
+        } else {
+            $data['message'] = $this->restapi_model->changePassword($id, $oldpassword, $newpassword, $confirmpassword);
+        }
+        $this->load->view('json', $data);
+    }
  
 } ?>

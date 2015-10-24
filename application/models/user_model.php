@@ -517,6 +517,25 @@ class User_model extends CI_Model
     	 $usercount=$query->usercount;
     	 return $usercount;
     }
+    public function getIdByEmail($useremail)
+    {
+        $query = $this->db->query('SELECT `id` FROM `user`
+		WHERE `email`=('.$this->db->escape($useremail).')')->row();
+        $userid = $query->id;
+
+        return $userid;
+    }
+    public function forgotPasswordSubmit($newpassword, $userid)
+    {
+        $newpassword = md5($newpassword);
+        $query = $this->db->query('UPDATE `user` SET `forgotpassword`=('.$this->db->escape($newpassword).') WHERE `id`=('.$this->db->escape($userid).')');
+        if (!$query) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
 
 }
 ?>
