@@ -75,28 +75,24 @@ $elements[0]->sort="1";
 $elements[0]->header="ID";
 $elements[0]->alias="id";
 
-$elements=array();
 $elements[1]=new stdClass();
 $elements[1]->field="`youtube_pickedvideos`.`status`";
 $elements[1]->sort="1";
 $elements[1]->header="Status";
 $elements[1]->alias="status";
 
-$elements=array();
 $elements[2]=new stdClass();
 $elements[2]->field="`youtube_pickedvideos`.`url`";
 $elements[2]->sort="1";
 $elements[2]->header="Url";
 $elements[2]->alias="url";
 
-$elements=array();
 $elements[3]=new stdClass();
 $elements[3]->field="`youtube_pickedvideos`.`image`";
 $elements[3]->sort="1";
 $elements[3]->header="Image";
 $elements[3]->alias="image";
 
-$elements=array();
 $elements[4]=new stdClass();
 $elements[4]->field="`youtube_pickedvideos`.`timestamp`";
 $elements[4]->sort="1";
