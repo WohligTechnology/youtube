@@ -93,19 +93,18 @@ class User_model extends CI_Model
 		$query=$this->db->get( 'user' )->row();
 		return $query;
 	}
-    public function authenticate()
-    {
-        $is_logged_in = $this->session->userdata('logged_in');
-        //        return $is_logged_in;
+    function authenticate() {
+         $is_logged_in = $this->session->userdata( 'logged_in' );
+//        return $is_logged_in;
         //print_r($this->session->userdata( 'logged_in' ));
-        if ($is_logged_in != true) {
+        if ( $is_logged_in != true) {
             return false;
         } //$is_logged_in !== 'true' || !isset( $is_logged_in )
         else {
-            $userid = $this->session->userdata('id');
-            $query = $this->db->query('SELECT `id`, `name`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `address`, `contact`, `dob`, `street`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`, `website`, `forgotpassword`, `coverimage`, `about`, `hobbies`, `profession` FROM `user` WHERE `id`=('.$this->db->escape($userid).')')->row();
-            // $userid = $this->session->userdata( );
-            return $query;
+		$userid=$this->session->userdata('id');
+		$query=$this->db->query("SELECT * FROM `user` WHERE `id`='$userid'")->row();
+           // $userid = $this->session->userdata( );
+         return $query;
         }
     }
 	
@@ -327,17 +326,7 @@ class User_model extends CI_Model
 
 
     }
-    function authenticate() {
-        $is_logged_in = $this->session->userdata( 'logged_in' );
-        //print_r($is_logged_in);
-        if ( $is_logged_in !== 'true' || !isset( $is_logged_in ) ) {
-            return false;
-        } //$is_logged_in !== 'true' || !isset( $is_logged_in )
-        else {
-            $userid = $this->session->userdata( 'id' );
-         return $userid;
-        }
-    }
+   
     
     function frontendauthenticate($email,$password) 
     {
@@ -477,7 +466,7 @@ class User_model extends CI_Model
 //        }
 	}
 	
-    function sociallogin($user_profile,$provider)
+     function sociallogin($user_profile,$provider)
     {
         $query=$this->db->query("SELECT * FROM `user` WHERE `user`.`socialid`='$user_profile->identifier'");
         if($query->num_rows == 0)
@@ -499,18 +488,17 @@ class User_model extends CI_Model
 						break;
 					}
 
-            $query2=$this->db->query("INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `dob`, `street`, `address`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`) VALUES (NULL, '$user_profile->displayName', '', '$user_profile->email', '3', CURRENT_TIMESTAMP, '1', '$user_profile->photoURL', '', '$user_profile->identifier', '$provider', '$user_profile->birthYear-$user_profile->birthMonth-$user_profile->birthDay', '', '$user_profile->address,$user_profile->region', '$user_profile->city', '', '$user_profile->country', '', '$facebookid', '$googleid', '$twitterid')");
+            $query2=$this->db->query("INSERT INTO `user` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `json`, `dob`, `street`, `address`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`) VALUES (NULL, '$user_profile->displayName', '', '$user_profile->email', '3', CURRENT_TIMESTAMP, '1', '$user_profile->photoURL', '', '$user_profile->identifier', '$provider', '', '$user_profile->birthYear-$user_profile->birthMonth-$user_profile->birthDay', '', '$user_profile->address,$user_profile->region', '$user_profile->city', '', '$user_profile->country', '', '$facebookid', '$googleid', '$twitterid')");
             $id=$this->db->insert_id();
-            $newdata = $this->db->query('SELECT  `user`.`id`, `user`.`name`, `user`.`email`, `user`.`accesslevel`, `user`.`timestamp`, `user`.`status`, `user`.`image`, `user`.`username`, `user`.`socialid`, `user`.`logintype`, `user`.`address`, `user`.`contact`, `user`.`dob`, `user`.`street`, `user`.`city`, `user`.`state`, `user`.`country`, `user`.`pincode`, `user`.`facebook`, `user`.`google`, `user`.`twitter`, `user`.`website`, `user`.`forgotpassword`, `user`.`coverimage`, `user`.`about`, `user`.`hobbies`, `user`.`profession`,`userimages`.`image` FROM `user` LEFT OUTER JOIN `userimages` ON `userimages`.`user`=`user`.`id` WHERE `user`.`id`=('.$this->db->escape($user).')')->row();
-//            $newdata = array(
-//                'email'     => $user_profile->email,
-//                'password' => "",
-//                'logged_in' => true,
-//                'id'=> $id,
-//                'name'=> $user_profile->displayName,
-//                'image'=> $user_profile->photoURL,
-//                'logintype'=>$provider
-//            );
+            $newdata = array(
+                'email'     => $user_profile->email,
+                'password' => "",
+                'logged_in' => true,
+                'id'=> $id,
+                'name'=> $user_profile->displayName,
+                'image'=> $user_profile->photoURL,
+                'logintype'=>$provider
+            );
 
             $this->session->set_userdata($newdata);
 
@@ -520,13 +508,22 @@ class User_model extends CI_Model
         else
         {
             $query=$query->row();
-          $newdata = $this->db->query('SELECT  `user`.`id`, `user`.`name`, `user`.`email`, `user`.`accesslevel`, `user`.`timestamp`, `user`.`status`, `user`.`image`, `user`.`username`, `user`.`socialid`, `user`.`logintype`, `user`.`address`, `user`.`contact`, `user`.`dob`, `user`.`street`, `user`.`city`, `user`.`state`, `user`.`country`, `user`.`pincode`, `user`.`facebook`, `user`.`google`, `user`.`twitter`, `user`.`website`, `user`.`forgotpassword`, `user`.`coverimage`, `user`.`about`, `user`.`hobbies`, `user`.`profession`,`userimages`.`image` FROM `user` LEFT OUTER JOIN `userimages` ON `userimages`.`user`=`user`.`id` WHERE `user`.`id`=('.$this->db->escape($user).')')->row();
+            $newdata = array(
+                'email'     => $user_profile->email,
+                'password' => "",
+                'logged_in' => true,
+                'id'=> $query->id,
+                'name'=> $user_profile->displayName,
+                'image'=> $user_profile->photoURL,
+                'logintype'=>$provider
+            );
 
             $this->session->set_userdata($newdata);
 
             return $newdata;
         }
     }
+
     public function usercount(){
     	 $query=$this->db->query("SELECT COUNT(*) as `usercount` FROM `user`")->row();
     	 $usercount=$query->usercount;
