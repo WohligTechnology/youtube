@@ -758,6 +758,11 @@ $this->load->view("json",$data);
         }
         $this->load->view('json', $data);
     }
+ public function authenticate()
+    {
+        $data['message'] = $this->user_model->authenticate();
+        $this->load->view('json', $data);
+    }
  public function signUp()
     {
         $data = json_decode(file_get_contents('php://input'), true);

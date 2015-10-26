@@ -93,6 +93,21 @@ class User_model extends CI_Model
 		$query=$this->db->get( 'user' )->row();
 		return $query;
 	}
+    public function authenticate()
+    {
+        $is_logged_in = $this->session->userdata('logged_in');
+        //        return $is_logged_in;
+        //print_r($this->session->userdata( 'logged_in' ));
+        if ($is_logged_in != true) {
+            return false;
+        } //$is_logged_in !== 'true' || !isset( $is_logged_in )
+        else {
+            $userid = $this->session->userdata('id');
+            $query = $this->db->query('SELECT `id`, `name`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `address`, `contact`, `dob`, `street`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`, `website`, `forgotpassword`, `coverimage`, `about`, `hobbies`, `profession` FROM `user` WHERE `id`=('.$this->db->escape($userid).')')->row();
+            // $userid = $this->session->userdata( );
+            return $query;
+        }
+    }
 	
 	public function edit($id,$name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$address,$contact,$dob,$website,$about,$hobbies,$profession,$coverimage)
 	{
