@@ -96,5 +96,27 @@ class restapi_model extends CI_Model
 			return -1;
         }
     }
+    public function updateProfileImage($imageName, $userid)
+    {
+        $query = $this->db->query('UPDATE `user`
+ SET `image` = '.$this->db->escape($imageName).'
+ WHERE id = ('.$this->db->escape($userid).')');
+        if (!$query) {
+            return 0;
+        } else {
+            return $query;
+        }
+    }
+    public function updateCoverImage($imageName, $userid)
+    {
+        $query = $this->db->query('UPDATE `user`
+ SET `coverimage` = '.$this->db->escape($imageName).'
+ WHERE id = ('.$this->db->escape($userid).')');
+        if (!$query) {
+            return 0;
+        } else {
+            return $query;
+        }
+    }
   
 }

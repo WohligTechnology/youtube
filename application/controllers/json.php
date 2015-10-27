@@ -860,5 +860,33 @@ $data['message'] = $this->restapi_model->getuserdetails($id);
         }
         $this->load->view('json', $data);
     }
+ public function profileImageUpload()
+    {
+        $user = $this->input->get_post('id');
+        $date = new DateTime();
+        $imageName = 'image:'.rand(0, 100000).''.$date->getTimestamp().'.jpg';
+        if (move_uploaded_file($_FILES['file']['tmp_name'], './uploads/'.$imageName)) {
+            $this->restapi_model->updateProfileImage($imageName, $user);
+            $data['message'] = $imageName;
+            $this->load->view('json', $data);
+        } else {
+            $data['message'] = 'false';
+            $this->load->view('json', $data);
+        }
+    }
+    public function coverImageUpload()
+    {
+        $user = $this->input->get_post('id');
+        $date = new DateTime();
+        $imageName = 'image:'.rand(0, 100000).''.$date->getTimestamp().'.jpg';
+        if (move_uploaded_file($_FILES['file']['tmp_name'], './uploads/'.$imageName)) {
+            $this->restapi_model->updateCoverImage($imageName, $user);
+            $data['message'] = $imageName;
+            $this->load->view('json', $data);
+        } else {
+            $data['message'] = 'false';
+            $this->load->view('json', $data);
+        }
+    }
  
 } ?>
