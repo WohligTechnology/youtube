@@ -54,7 +54,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		$this->refreshToken();
 
 		// ask google api for user infos
-		$response = $this->api->api( "https://www.googleapis.com/oauth2/v1/userinfo" ); 
+		$response = $this->api->api( "https://www.googleapis.com/oauth2/v3/userinfo" ); 
 
 		if ( ! isset( $response->id ) || isset( $response->error ) ){
 			throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );

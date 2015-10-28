@@ -290,9 +290,9 @@ class Site extends CI_Controller
 		$data['before2']=$this->input->get('id');
 		$data['page']='edituser';
 		$data[ 'activemenu' ] = 'users';
-		 $data['page2']='block/userblock';
+//		 $data['page2']='block/userblock';
 		$data['title']='Edit User';
-		$this->load->view('templatewith2',$data);
+		$this->load->view('template',$data);
 	}
 	function editusersubmit()
 	{
@@ -2941,5 +2941,86 @@ $userid=$this->input->get("userid");
 $data["redirect"]="site/viewuserimages?id=".$userid;
 $this->load->view("redirect2",$data);
 }
+    public function viewconfig()
+{
+$access=array("1");
+$this->checkaccess($access);
+//$data['windowvalue']=$this->restapi_model->getvalueforwindow(2,1);
+$data['playlistcount']=$this->config_model->checkplaylist();
+
+    if($data['playlistcount']!= 0)
+    {
+        $data["page"]="viewconfig";
+        $data['channelid']=$this->config_model->getplaylistdropdown();
+        $data["before"]=$this->config_model->beforeedit();
+//        $data["page2"]="block/userblock";
+        $data["title"]="View config";
+        $this->load->view("template",$data);
+    }
+    else
+    {
+        $data["page"]="viewconfiglogin";
+        $data["title"]="View config";
+        $this->load->view("template",$data);
+    }
+}
+    public function editconfigsubmit(){
+    $id=$this->input->get_post("1");
+    $name=$this->input->get_post("name");
+    $about=$this->input->get_post("about");
+    $hobbies=$this->input->get_post("hobbies");
+    $coverimage=$this->input->get_post("coverimage");
+    $fbusername=$this->input->get_post("fbusername");
+    $instausername=$this->input->get_post("instausername");
+    $channelid=$this->input->get_post("channelid");
+ $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'coverimage';
+            $coverimage = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $coverimage = $uploaddata['file_name'];
+                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
+                $config_r['maintain_ratio'] = true;
+                $config_t['create_thumb'] = false; ///add this
+                $config_r['width'] = 800;
+                $config_r['height'] = 800;
+                $config_r['quality'] = 100;
+
+                // end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if (!$this->image_lib->resize()) {
+                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
+
+                    // return false;
+                } else {
+
+                    // print_r($this->image_lib->dest_image);
+                    // dest_image
+
+                    $coverimage = $this->image_lib->dest_image;
+
+                    // return false;
+                }
+            }
+
+            if ($coverimage == '') {
+                $coverimage = $this->config_model->getCoverImageById($id);
+
+                // print_r($coverimage);
+
+                $coverimage = $coverimage->coverimage;
+            }
+
+if($this->config_model->edit($id,$name,$about,$hobbies,$coverimage,$fbusername,$instausername,$channelid)==0)
+$data["alerterror"]="New Config could not be Updated.";
+else
+$data["alertsuccess"]="Config Updated Successfully.";
+$data["redirect"]="site/viewconfig";
+$this->load->view("redirect",$data);
+    }
 }
 ?>

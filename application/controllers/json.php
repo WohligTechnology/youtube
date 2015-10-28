@@ -888,5 +888,72 @@ $data['message'] = $this->restapi_model->getuserdetails($id);
             $this->load->view('json', $data);
         }
     }
+ public function getyoutubeinfo(){
+  $code = $this->input->get_post('code');
+     $fields = array(
+                                'code' => $code,
+                                'client_id' => '889690190758-3uod1k8ao7ev995ds191jo8uu2supd5a.apps.googleusercontent.com',
+                                'client_secret' => 'swMQkHPo_O-7KTyFo3Jum6Ug',
+                                'redirect_uri' => 'http://localhost/youtube/index.php/json/getyoutubeinfo',
+                                'grant_type' => 'authorization_code'
+                        );
+        $stng= http_build_query($fields);
+        $ch = curl_init("https://accounts.google.com/o/oauth2/token");
+
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $stng);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        $result = curl_exec($ch);
+        $result = json_decode($result);
+//        echo $result->access_token;
+        curl_close($ch); 
+     
+     
+     
+         // GET CURL
+        $ch = curl_init();  
+        $url="https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true&access_token=".$result->access_token;
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+      curl_setopt($ch,CURLOPT_HEADER, false); 
+        $output=curl_exec($ch);
+        $result = json_decode($output);
+        $data['message']=$result->items[0]->contentDetails->relatedPlaylists;
+        $getchannels=$this->restapi_model->getyoutubedetails($data['message']);
+       
+        
+//        $this->load->view("json",$data);
+        curl_close($ch);
+ }
+
+ 
  
 } ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

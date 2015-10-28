@@ -547,6 +547,14 @@ class User_model extends CI_Model
             return 1;
         }
     }
+    
+       function backendLogin($user_profile,$provider)
+    {
+           echo "hiiiiiiiiiii";
+//            $query2=$this->db->query("INSERT INTO `config` (`id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`,`dob`, `street`, `address`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`) VALUES (NULL, '$user_profile->displayName', '', '$user_profile->email', '3', CURRENT_TIMESTAMP, '1', '$user_profile->photoURL', '', '$user_profile->identifier', '$provider', '$user_profile->birthYear-$user_profile->birthMonth-$user_profile->birthDay', '', '$user_profile->address,$user_profile->city', '','$user_profile->country', '','', '$facebookid', '$googleid', '$twitterid')");
+//            $id=$this->db->insert_id();
+          
+    }
 
 
 }

@@ -118,5 +118,32 @@ class restapi_model extends CI_Model
             return $query;
         }
     }
+    
+    public function getyoutubedetails($details){
+            $query = $this->db->query('TRUNCATE TABLE `playlist`');
+            foreach ($details as $key => $value) 
+            { 
+            $data=array("playlist" => $key,"channelid" => $value);
+            $query=$this->db->insert( "playlist", $data );
+            }
+            if(!$query)
+            return  0;
+            else
+            return  1;
+    }
+    
+//    public function getvalueforwindow($fromjson,$fromsite){
+//        
+//        if($fromjson== 1)
+//        {
+//            echo "from json   ".$fromjson;
+//            return 1;
+//        }
+//        else
+//        {
+//            echo "from site   ".$fromsite;
+//            return 0;
+//        }
+//    }
   
 }
