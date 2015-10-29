@@ -17,7 +17,7 @@
 </div>
 </div>
 <?php $this->chintantable->createpagination();?>
-<div class="createbuttonplacement"><a class="btn-floating btn-large waves-effect waves-light blue darken-4 tooltipped" href="<?php echo site_url("site/createuserimages?id=").$this->input->get('id'); ?>"data-position="top" data-delay="50" data-tooltip="Create"><i class="material-icons">add</i></a></div>
+<div class="createbuttonplacement"><a class="btn-floating btn-large waves-effect waves-light blue darken-4 tooltipped" href="<?php echo site_url("site/createuserimages?id=1");?>"data-position="top" data-delay="50" data-tooltip="Create"><i class="material-icons">add</i></a></div>
 </div>
 </div>
 <script>
@@ -26,7 +26,7 @@ function drawtable(resultrow) {
         if (resultrow.image == "") {
             image = "No Receipt Available";
         }
-return "<tr><td>" + resultrow.id + "</td><td>" + image + "</td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad' href='<?php echo site_url('site/edituserimages?id=');?>"+resultrow.id+ "&userid=" + resultrow.userid +"'><i class='fa fa-pencil propericon'></i></a><a class='btn btn-danger btn-xs waves-effect waves-light red pad10 z-depth-0 less-pad' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deleteuserimages?id='); ?>"+resultrow.id+"&userid=" + resultrow.userid +"'><i class='material-icons propericon'>delete</i></a></td></tr>";
+return "<tr><td>" + resultrow.id + "</td><td>" + image + "</td><td><a class='btn btn-primary btn-xs waves-effect waves-light blue darken-4 z-depth-0 less-pad' href='<?php echo site_url('site/edituserimages?id=');?>"+resultrow.id+ "'><i class='fa fa-pencil propericon'></i></a><a class='btn btn-danger btn-xs waves-effect waves-light red pad10 z-depth-0 less-pad' onclick=return confirm(\"Are you sure you want to delete?\") href='<?php echo site_url('site/deleteuserimages?id='); ?>"+resultrow.id+"'><i class='material-icons propericon'>delete</i></a></td></tr>";
 }
 generatejquery("<?php echo $base_url;?>");
 </script>

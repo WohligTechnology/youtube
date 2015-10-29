@@ -2726,10 +2726,10 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewuserimages";
 $data["page2"]="block/userblock";
-$data["activemenu"]="users";
+$data["activemenu"]="config";
 $data["before1"]=$this->input->get('id');
 $data["before2"]=$this->input->get('id');
-$data["base_url"]=site_url("site/viewuserimagesjson?id=".$this->input->get('id'));
+$data["base_url"]=site_url("site/viewuserimagesjson?id=1");
 $data["title"]="View userimages";
 $this->load->view("templatewith2",$data);
 }
@@ -2773,7 +2773,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `userimages`","WHERE `userimages`.`user`=$id");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `userimages`");
 $this->load->view("json",$data);
 }
 
@@ -2783,9 +2783,9 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createuserimages";
 $data["page2"]="block/userblock";
-$data["activemenu"]="users";
-$data["before1"]=$this->input->get('id');
-$data["before2"]=$this->input->get('id');
+$data["activemenu"]="config";
+$data["before1"]=1;
+//$data["before2"]=$this->input->get('id');
 $data[ 'user' ] =$this->user_model->getuserdropdown();
 $data["title"]="Create userimages";
 $this->load->view("templatewith2",$data);
@@ -2794,18 +2794,8 @@ public function createuserimagessubmit()
 {
 $access=array("1");
 $this->checkaccess($access);
-$this->form_validation->set_rules("image","Image","trim");
-if($this->form_validation->run()==FALSE)
-{
-$data["alerterror"]=validation_errors();
-$data["page"]="createuserimages";
-$data[ 'user' ] =$this->user_model->getuserdropdown();
-$data["title"]="Create userimages";
-$this->load->view("template",$data);
-}
-else
-{
-$user=$this->input->get_post("user");
+
+//$user=$this->input->get_post("user");
  $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -2840,13 +2830,13 @@ $user=$this->input->get_post("user");
                 }
                 
 			}
-if($this->userimages_model->create($user,$image)==0)
+if($this->userimages_model->create($image)==0)
 $data["alerterror"]="New userimages could not be created.";
 else
 $data["alertsuccess"]="userimages created Successfully.";
-$data["redirect"]="site/viewuserimages?id=".$user;
+$data["redirect"]="site/viewuserimages?id=1";
 $this->load->view("redirect2",$data);
-}
+
 }
 public function edituserimages()
 {
@@ -2854,9 +2844,9 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="edituserimages";
 $data["page2"]="block/userblock";
-$data["activemenu"]="users";
-$data["before1"]=$this->input->get('userid');
-$data["before2"]=$this->input->get('userid');
+$data["activemenu"]="config";
+$data["before1"]=1;
+//$data["before2"]=$this->input->get('userid');
 $data[ 'user' ] =$this->user_model->getuserdropdown();
 $data["title"]="Edit userimages";
 $data["before"]=$this->userimages_model->beforeedit($this->input->get("id"));
@@ -2924,11 +2914,11 @@ $user=$this->input->get_post("user");
                 $image=$image->image;
             }
 
-if($this->userimages_model->edit($id,$user,$image)==0)
+if($this->userimages_model->edit($id,$image)==0)
 $data["alerterror"]="New userimages could not be Updated.";
 else
 $data["alertsuccess"]="userimages Updated Successfully.";
-$data["redirect"]="site/viewuserimages?id=".$user;
+$data["redirect"]="site/viewuserimages?id=1";
 $this->load->view("redirect2",$data);
 }
 }
@@ -2937,8 +2927,8 @@ public function deleteuserimages()
 $access=array("1");
 $this->checkaccess($access);
 $this->userimages_model->delete($this->input->get("id"));
-$userid=$this->input->get("userid");
-$data["redirect"]="site/viewuserimages?id=".$userid;
+//$userid=$this->input->get("userid");
+$data["redirect"]="site/viewuserimages?id=1";
 $this->load->view("redirect2",$data);
 }
     public function viewconfig()

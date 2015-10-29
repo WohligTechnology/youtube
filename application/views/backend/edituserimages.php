@@ -7,12 +7,14 @@
 <form class='col s12' method='post' action='<?php echo site_url("site/edituserimagessubmit");?>' enctype= 'multipart/form-data'>
 <input type="hidden" id="normal-field" class="form-control" name="id" value="<?php echo set_value('id',$before->id);?>" style="display:none;">
 
+<!--
 <div class=" row">
 <div class=" input-field col s12 m6">
 <?php echo form_dropdown("user",$user,set_value('user',$before->user));?>
 <label for="user">User</label>
 </div>
 </div>
+-->
   <div class="row">
             <div class="file-field input-field col s12 m6">
                <span class="img-center big">
@@ -34,7 +36,7 @@
 <div class="row">
 <div class="col s6">
 <button type="submit" class="btn btn-primary waves-effect waves-light  blue darken-4">Save</button>
-<a href='<?php echo site_url("site/viewuserimages?id=").$this->input->get('userid'); ?>' class='btn btn-secondary waves-effect waves-light red'>Cancel</a>
+<a href='<?php echo site_url("site/viewuserimages?id=1"); ?>' class='btn btn-secondary waves-effect waves-light red'>Cancel</a>
 </div>
 </div>
 </form>
