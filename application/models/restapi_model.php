@@ -132,18 +132,9 @@ class restapi_model extends CI_Model
             return  1;
     }
     
-//    public function getvalueforwindow($fromjson,$fromsite){
-//        
-//        if($fromjson== 1)
-//        {
-//            echo "from json   ".$fromjson;
-//            return 1;
-//        }
-//        else
-//        {
-//            echo "from site   ".$fromsite;
-//            return 0;
-//        }
-//    }
+    public function getConfigDetails(){
+            $query=$this->db->query("SELECT `id`, `about`, `hobbies`, `coverimage`, `fbusername`, `instausername`, `channelid`, `name` FROM `config` WHERE 1");
+        return $query;
+    }
   
 }

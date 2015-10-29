@@ -929,6 +929,11 @@ $data['message'] = $this->restapi_model->getuserdetails($id);
 //        $this->load->view("json",$data);
         curl_close($ch);
  }
+ public function getConfigDetails()
+    {
+        $data['message'] = $this->restapi_model->getConfigDetails();
+        $this->load->view('json', $data);
+    }
 
  
  
