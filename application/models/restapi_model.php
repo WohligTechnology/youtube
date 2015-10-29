@@ -133,7 +133,7 @@ class restapi_model extends CI_Model
     }
     
     public function getConfigDetails(){
-            $query=$this->db->query("SELECT `id`, `about`, `hobbies`, `coverimage`, `fbusername`, `instausername`, `channelid`, `name` FROM `config` WHERE 1")->row();
+            $query=$this->db->query("SELECT `config`.`id`, `config`.`about`, `config`.`hobbies`, `config`.`coverimage`, `config`.`fbusername`, `config`.`instausername`, `config`.`channelid`, `config`.`name`,`playlist`.`id` as `playlistid`,`playlist`.`playlist`,`playlist`.`channelid` as `channelidname` FROM `config` LEFT OUTER JOIN `playlist` ON `playlist`.`id`=`config`.`channelid` WHERE 1")->row();
         return $query;
     }
   

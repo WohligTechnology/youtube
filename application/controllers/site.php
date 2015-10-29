@@ -2952,6 +2952,7 @@ $data['playlistcount']=$this->config_model->checkplaylist();
     {
         $data["page"]="viewconfig";
         $data['channelid']=$this->config_model->getplaylistdropdown();
+        $data["before1"]=1;
         $data["before"]=$this->config_model->beforeedit();
         $data["page2"]="block/userblock";
         $data["title"]="View config";
