@@ -35,7 +35,7 @@ class restapi_model extends CI_Model
             $user = $query->row();
             $user = $user->id;
             $query1 = $this->db->query("UPDATE `user` SET `forgotpassword`='' WHERE `email`=(".$this->db->escape($email).')');
-           $newdata = $this->db->query('SELECT  `id`, `name`, `password`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `address`, `contact`, `dob`, `street`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`, `website`, `forgotpassword`, `coverimage`, `about`, `hobbies`, `profession` FROM `user` WHERE `id`=('.$this->db->escape($user).')')->row();
+           $newdata = $this->db->query('SELECT  `id`, `name`, `email`, `accesslevel`, `timestamp`, `status`, `image`, `username`, `socialid`, `logintype`, `address`, `contact`, `dob`, `street`, `city`, `state`, `country`, `pincode`, `facebook`, `google`, `twitter`, `website`, `forgotpassword`, `coverimage`, `about`, `hobbies`, `profession` FROM `user` WHERE `id`=('.$this->db->escape($user).')')->row();
             $this->session->set_userdata($newdata);
             //print_r($newdata);
             return $newdata;
@@ -133,7 +133,7 @@ class restapi_model extends CI_Model
     }
     
     public function getConfigDetails(){
-            $query=$this->db->query("SELECT `id`, `about`, `hobbies`, `coverimage`, `fbusername`, `instausername`, `channelid`, `name` FROM `config` WHERE 1");
+            $query=$this->db->query("SELECT `id`, `about`, `hobbies`, `coverimage`, `fbusername`, `instausername`, `channelid`, `name` FROM `config` WHERE 1")->row();
         return $query;
     }
   
