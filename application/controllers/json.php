@@ -891,12 +891,12 @@ $data['message'] = $this->restapi_model->getuserdetails($id);
  public function getyoutubeinfo(){
   $code = $this->input->get_post('code');
      $fields = array(
-                                'code' => $code,
-                                'client_id' => '889690190758-3uod1k8ao7ev995ds191jo8uu2supd5a.apps.googleusercontent.com',
-                                'client_secret' => 'swMQkHPo_O-7KTyFo3Jum6Ug',
-                                'redirect_uri' => 'http://localhost/youtube/index.php/json/getyoutubeinfo',
-                                'grant_type' => 'authorization_code'
-                        );
+                        'code' => $code,
+                        'client_id' => '694450719069-cr85j7fssm5jara9ojl6u9boenheppsg.apps.googleusercontent.com',
+                        'client_secret' => 'H-lbId7xCFx655aIzYz3EDZI',
+                        'redirect_uri' => 'http://wohlig.co.in/youtube/index.php/json/getyoutubeinfo',
+                        'grant_type' => 'authorization_code'
+                    );
         $stng= http_build_query($fields);
         $ch = curl_init("https://accounts.google.com/o/oauth2/token");
 

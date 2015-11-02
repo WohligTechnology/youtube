@@ -97,7 +97,7 @@ class User_model extends CI_Model
          $is_logged_in = $this->session->userdata( 'logged_in' );
 //        return $is_logged_in;
         //print_r($this->session->userdata( 'logged_in' ));
-        if ( $is_logged_in != true) {
+        if ($is_logged_in != true) {
             return false;
         } //$is_logged_in !== 'true' || !isset( $is_logged_in )
         else {
